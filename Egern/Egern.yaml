@@ -1,0 +1,426 @@
+# Update-2025.12.16 11.42
+# 图标备用📮✉️📪📬💫💬💥🔨🥼🚫🔰🙈🍎🎬📺🎱🍐🐝🦁💡🌵🐯🎸💻📽🌏🕹📡🦑🌟🐷🦒🐳🚦📵🎧💊🔓🚦🚥🐼⛔️🈲🌐🎯🖲️🐦🔞🎵📱🚀💳♻️🙈🍱🔂📦🔀⏱
+
+# 自动更新配置 (如需启用请取消注释)
+# auto_update:
+#   url: https://raw.githubusercontent.com/smallsun107/Profiles/refs/heads/main/Egern/Egern.yaml
+#   interval: 86400
+
+# 基础配置
+ipv6: false
+http_port: 3080
+socks_port: 3090
+allow_external_connections: true
+vif_only: true
+hide_vpn_icon: false
+# DNS 劫持
+hijack_dns:
+  - '*:53'
+# 数据库 URL 配置
+geoip_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb
+asn_db_url: https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
+# 延迟测试
+proxy_latency_test_url: http://www.google.com/generate_204
+direct_latency_test_url: http://www.baidu.com
+# 路由配置
+compat_route: false
+include_all_networks: false
+include_apns: false
+include_cellular_services: false
+include_local_networks: false
+
+dns:
+  bootstrap:
+    - system
+    - 223.5.5.5
+    - 114.114.114.114
+  upstreams:
+    China:
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+    Global:
+      - https://dns.google/dns-query
+      - https://1.1.1.1/dns-query
+  forward:
+    # 注意：使用 rule_set 分流 DNS 会增加内存开销，如遇卡顿可尝试注释下方 block
+    - proxy_rule_set:
+        match: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/ChinaMax/ChinaMax_All.list
+        value: China
+    - wildcard:
+        match: '*'
+        value: Global
+  public_ip_lookup_url: https://ifconfig.me/ip
+
+proxies:
+  - vmess:
+      name: ☁️ Server 00
+      server: 1.1.1.1
+      port: 443
+      user_id: "uuid"
+      security: auto
+      transport:
+        wss:
+          path: /rss
+          headers:
+            Host: 1.1.1.1
+          sni: 1.1.1.1
+          skip_tls_verify: false
+
+
+# 策略组配置
+policy_groups:
+  - external:
+      name: 🔨 手动切换
+      type: select
+      urls:
+        - "可以是本地路径或远程代理链接"
+      update_interval: 86400
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Select.png
+
+  - select:
+      name: ✈️ 节点选择
+      policies:
+        - 🔨 手动切换
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🐶 本地节点
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Available.png
+
+  - select:
+      name: 🐶 本地节点
+      policies:
+        - ☁️ CMI 00
+        - ☁️ RackNerd 00
+        - ☁️ RackNerd 01
+        - ☁️ RackNerdHome 00
+        - ☁️ RackNerdHome 01
+        - ☁️ RackNerdWork 00
+        - ☁️ RackNerdWork 01
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Reject.orig.png
+
+  - select:
+      name: 📲 电报信息
+      policies:
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/Telegram.png
+
+  - select:
+      name: 📹 油管视频
+      policies:
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/YouTube.png
+
+  - select:
+      name: 📽 哔哩哔哩
+      policies:
+        - DIRECT
+        - 🇭🇰 香港节点
+        - 🌏 CDN节点
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/BiliBili.png
+
+  - select:
+      name: 🍿 国外媒体
+      policies:
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/StreamingSE.png
+
+  - select:
+      name: 🍔 国内媒体
+      policies:
+        - DIRECT
+        - 🇭🇰 香港节点
+        - 🌏 CDN节点
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Streaming.png
+
+  - select:
+      name: 🎶 抖音
+      policies:
+        - DIRECT
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/TripAdvisor.png
+
+  - select:
+      name: 🎵 TikTok
+      policies:
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/TikTok.png
+
+  - select:
+      name: Ⓜ️ 微软服务
+      policies:
+        - DIRECT
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Microsoft.png
+
+  - select:
+      name: 🍟 OpenAI
+      policies:
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Orz-3/mini/master/Alpha/Nucleus.png
+
+  - select:
+      name: 🍎 苹果服务
+      policies:
+        - DIRECT
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/Apple.png
+
+  - select:
+      name: 🎮 游戏平台
+      policies:
+        - DIRECT
+        - ✈️ 节点选择
+        - 🇭🇰 香港节点
+        - 🇨🇳 台湾节点
+        - 🇺🇲 美国节点
+        - 🇯🇵 日本节点
+        - 🇸🇬 新加坡节点
+        - 🛰️ 专线节点
+        - 🌏 CDN节点
+        - 🔨 手动切换
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Steam.png
+
+  - select:
+      name: 🛑 全球拦截
+      policies:
+        - REJECT
+        - DIRECT
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Reject.png
+
+  - select:
+      name: 🌏 CDN节点
+      policies:
+        - 🔨 手动切换
+      flatten: true
+      filter: Oracle|Rack|Apple|Router|BPB|CDN
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Airport.png
+
+  - select:
+      name: 🛰️ 专线节点
+      policies:
+        - 🔨 手动切换
+      flatten: true
+      filter: VmShell|CMI
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/RoundRobin.png
+
+  - auto_test:
+      name: 🇭🇰 香港节点
+      policies:
+        - 🔨 手动切换
+      flatten: true
+      filter: 🇭🇰|港|Hong|HK
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Hong_Kong.png
+
+  - auto_test:
+      name: 🇨🇳 台湾节点
+      policies:
+        - 🔨 手动切换
+      flatten: true
+      filter: 🇨🇳|台|Tai|TW
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Taiwan.png
+
+  - auto_test:
+      name: 🇺🇲 美国节点
+      policies:
+        - 🔨 手动切换
+      flatten: true
+      filter: 🇺🇸|美|States|US
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/United_States.png
+
+  - auto_test:
+      name: 🇯🇵 日本节点
+      policies:
+        - 🔨 手动切换
+      flatten: true
+      filter: 🇯🇵|日|Japan|JP
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Japan.png
+
+  - auto_test:
+      name: 🇸🇬 新加坡节点
+      policies:
+        - 🔨 手动切换
+      flatten: true
+      filter: 🇸🇬|新|Singapore|SG
+      icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Singapore.png
+
+# 分流规则
+rules:
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Telegram.yaml
+      policy: 📲 电报信息
+  
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/YouTube.yaml
+      policy: 📹 油管视频
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/BiliBili.yaml
+      policy: 📽 哔哩哔哩
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/GlobalMedia.yaml
+      policy: 🍿 国外媒体
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/ChinaMedia.yaml
+      policy: 🍔 国内媒体
+  
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/DouYin.yaml
+      policy: 🎶 抖音
+
+  - rule_set:
+      match:  https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/TikTok.yaml
+      policy: 🎵 TikTok
+  
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Microsoft.yaml
+      policy: Ⓜ️ 微软服务
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/OpenAI.yaml
+      policy: 🍟 OpenAI
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Apple.yaml
+      policy: 🍎 苹果服务
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Epic.yaml
+      policy: 🎮 游戏平台
+  
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Steam.yaml
+      policy: 🎮 游戏平台
+  
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Xbox.yaml
+      policy: 🎮 游戏平台
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Proxy.yaml
+      policy: ✈️ 节点选择
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Lan.yaml
+      policy: DIRECT
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/China.yaml
+      policy: DIRECT
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/ChinaIPs.yaml
+      policy: DIRECT
+
+  - rule_set:
+      match: https://raw.githubusercontent.com/smallsun107/0wnuse/main/Egern/Rules/Advertising.yaml
+      policy: REJECT
+
+  - geoip:
+      match: CN
+      policy: DIRECT
+      no_resolve: true
+  
+  - domain_suffix:
+      match: '*.cn'
+      policy: DIRECT
+  
+  - default:
+      policy: ✈️ 节点选择
+
+# MITM 配置
+mitm:
+  enabled: true
+  ca_p12: Egern_CA.p12
+  ca_passphrase: egern
+
+# 模块配置
+modules:
+  - name: 'iRingo: 🌤 WeatherKit'
+    url: https://github.com/NSRingo/WeatherKit/releases/latest/download/iRingo.WeatherKit.sgmodule
+    enabled: true
+  - name: DualSubs for YouTube
+    url: https://github.com/DualSubs/YouTube/releases/latest/download/DualSubs.YouTube.sgmodule
+    enabled: true
+  - name: BoxJS
+    url: https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule
+    enabled: true
+  - name: Script-Hub
+    url: https://raw.githubusercontent.com/Script-Hub-Org/Script-Hub/main/modules/script-hub.surge.sgmodule
+    enabled: true
+  - name: Sub-Store
+    url: https://raw.githubusercontent.com/sub-store-org/Sub-Store/master/config/Surge.sgmodule
+    enabled: true
+  - name: YouTube Enhance
+    url: https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule
+    enabled: true
